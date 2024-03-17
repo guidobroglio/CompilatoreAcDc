@@ -1,5 +1,4 @@
-/exception‎/
-/parser/
-/scanner/
 /test/
-/token/
+/scanner/
+/parser/
+/exception‎/

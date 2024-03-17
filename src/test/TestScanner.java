@@ -305,7 +305,7 @@ class TestScanner
 
 	    token = scanner.nextToken();
 	    assertEquals(TokenType.OP_ASSIGN, token.getTipo());
-	    assertEquals(null, token.getVal());
+	    assertEquals("=", token.getVal());
 	    assertEquals(5, token.getRiga());
 
 	    token = scanner.nextToken();
@@ -347,6 +347,41 @@ class TestScanner
 	    assertEquals(TokenType.EOF, token.getTipo());
 	    assertEquals(null, token.getVal());
 	    assertEquals(7, token.getRiga());
+	}
+
+	@Test
+	public void testErroriNumbers() throws IOException, LexicalException, FileNotFoundException
+	{
+		String path = "src/test/data/testScanner/erroriNumbers.txt";
+	    Scanner scanner = new Scanner(path);
+	     
+	    LexicalException ex1 = assertThrows(LexicalException.class, ()->{scanner.nextToken();});
+		assertEquals("Errore numerico alla riga 1: valore non valido, un intero non può iniziare con '0'", ex1.getMessage());
+		
+		LexicalException ex2 = assertThrows(LexicalException.class, ()->{scanner.nextToken();});
+		assertEquals("Errore numerico alla riga 2: cifre seguite da lettere", ex2.getMessage());
+		
+		LexicalException ex3 = assertThrows(LexicalException.class, ()->{scanner.nextToken();});
+		assertEquals("Errore numerico alla riga 3: cifre seguite da lettere", ex3.getMessage());
+		
+		LexicalException ex4 = assertThrows(LexicalException.class, ()->{scanner.nextToken();});
+		assertEquals("Errore numerico alla riga 4: troppi decimali", ex4.getMessage());
+		
+	}
+
+	@Test
+	public void testPeekToken() throws IOException, LexicalException
+	{
+		Scanner s = new Scanner("src/test/data/testScanner/testGenerale.txt");
+		assertEquals(s.peekToken().getTipo(), TokenType.INT);
+		assertEquals(s.nextToken().getTipo(), TokenType.INT);
+		assertEquals(s.peekToken().getTipo(), TokenType.ID);
+		assertEquals(s.nextToken().getTipo(), TokenType.ID);
+		
+		Token t = s.nextToken();
+		assertEquals(t.getTipo(), TokenType.SEMI);
+		assertEquals(t.getRiga(), 1);
+		assertEquals(t.getVal(), null);
 	}
 
 }

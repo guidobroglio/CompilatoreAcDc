@@ -2,11 +2,11 @@ package exception‎;
 
 public class SyntacticException extends Exception {
 
-    public SyntacticException(String message) {
-        super(message);
+    public SyntacticException(String string) {
+        super(string);
     }
 
-    public SyntacticException(String message, Throwable cause) {
-        super(message, cause);
+    public SyntacticException(String string, Throwable cause) {
+        super(string, cause);
     }
 }

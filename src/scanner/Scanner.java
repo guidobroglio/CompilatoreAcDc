@@ -11,7 +11,7 @@ import token.*;
 
 /**
  * 
- * @author Guido
+ * @author Guido Broglio 20043973
  *
  */
 
@@ -39,7 +39,8 @@ public class Scanner
 
     private Token nextTk = null;
 
-    public Scanner(String fileName) throws FileNotFoundException {
+    public Scanner(String fileName) throws FileNotFoundException 
+    {
 
         this.buffer = new PushbackReader(new FileReader(fileName));
         if(this.buffer==null)
@@ -52,10 +53,12 @@ public class Scanner
         this.skipChars = new ArrayList<>(Arrays.asList(' ', '\t', '\n', '\r', EOF));
 
         this.letters = new ArrayList<>();
-        for (char c = 'a'; c <= 'z'; c++) {
+        for (char c = 'a'; c <= 'z'; c++) 
+        {
             letters.add(c);
         }
-        for (char c = 'A'; c <= 'Z'; c++) {
+        for (char c = 'A'; c <= 'Z'; c++) 
+        {
             letters.add(c);
         }
 
@@ -75,40 +78,58 @@ public class Scanner
         this.keyWordsMap.put("int", TokenType.INT);
     }
 
-    public Token nextToken() throws LexicalException {
-        if (nextTk != null) {
+    public Token nextToken() throws LexicalException 
+    {
+        if (nextTk != null) 
+        {
             Token next = nextTk;
             nextTk = null;
             return next;
         }
         
         char nextChar;
-        try {
+        try 
+        {
             nextChar = peekChar();
             char skip;
             
-            while (this.skipChars.contains(nextChar)) {
+            while (this.skipChars.contains(nextChar)) 
+            {
                 skip = readChar();
                 
-                if (skip == '\n') {
+                if (skip == '\n') 
+                {
                     nextChar = peekChar();
                     riga++;
-                } else {
-                    if (skip == EOF) {
+                } 
+                else 
+                {
+                    if (skip == EOF) 
+                    {
                         Token token_eof = new Token(TokenType.EOF, riga);
                         return token_eof;
-                    } else {
+                    } 
+                    else 
+                    {
                         nextChar = peekChar();
                     }
                 }
             }
             
-            if (this.digits.contains(nextChar)) {
+            if (this.digits.contains(nextChar)) 
+            {
                 return scanNumber();
             }
             
-            if (this.letters.contains(nextChar)) {
+            if (this.letters.contains(nextChar)) 
+            {
                 return scanId();
+            }
+            
+            if(peekChar()=='=')
+            {
+            	readChar();
+            	return new Token(TokenType.OP_ASSIGN, riga, "=");
             }
             
             if (this.char_type_Map.containsKey(nextChar)) 
@@ -142,56 +163,70 @@ public class Scanner
     	return nextTk;
     }
   
-    private Token scanNumber() throws LexicalException, IOException {
-        // Definisci i limiti MIN e MAX per la gestione dei float
-        int MIN = 0;
-        int MAX = 5;
+    private Token scanNumber() throws LexicalException, IOException 
+    {
+        int MAX_FLOAT_DECIMALS = 5;
 
-        try {
-            // Inizializza il StringBuffer per contenere il numero
-            StringBuffer res = new StringBuffer("");
-            char num = readChar();
-            res.append(num);
+        StringBuilder res = new StringBuilder("");
 
-            // Crea una variabile per il token
-            Token t_number;
+        char num = readChar();
+        res.append(num);
 
-            // Leggi tutte le cifre prima del punto decimale
-            while (this.digits.contains(peekChar())) {
+        boolean isFloat = false;
+
+        if (num == '0') 
+        {
+            isFloat = true;
+        }
+
+        while (this.digits.contains(peekChar())) 
+        {
+            res.append(readChar());
+        }
+        
+        if (letters.contains(peekChar())) 
+        {
+            res.append(readChar());
+            throw new LexicalException("Errore numerico alla riga " + riga + ": cifre seguite da lettere");
+        }
+
+        else if (!isFloat && res.length() > 1 && res.charAt(0) == '0') 
+        {
+            throw new LexicalException("Errore numerico alla riga " + riga + ": valore non valido, un intero non può iniziare con '0'");
+        }
+
+        else if (peekChar() != '.') 
+        {
+            return new Token(isFloat ? TokenType.FLOAT : TokenType.INT, riga, res.toString());
+        } 
+        else 
+        {
+            res.append(readChar());
+
+            int count = 0;
+            while (this.digits.contains(peekChar())) 
+            {
                 res.append(readChar());
+                count++;
             }
 
-            // Controlla la presenza del punto decimale
-            if (peekChar() != '.') {
-                // Se non c'è un punto decimale, il numero è un intero
-                t_number = new Token(TokenType.INT, riga, res.toString());
-                return t_number;
-            } else {
-                // Se c'è un punto decimale, continua la lettura
+            if (letters.contains(peekChar())) 
+            {
                 res.append(readChar());
-                int index = res.length() - 1;
-                int count = 0;
-
-                // Leggi le cifre dopo il punto decimale
-                while (this.digits.contains(peekChar())) {
-                    res.append(readChar());
-                    count++;
-                }
-
-                // Verifica i limiti per determinare se è un FLOAT o INT
-                if ((count <= MAX) && (count >= MIN)) {
-                    t_number = new Token(TokenType.FLOAT, riga, res.toString());
-                    return t_number;
-                } else {
-                    // Se il conteggio è fuori dai limiti, solleva un'eccezione LexicalException
-                    throw new LexicalException("Errore numerico alla riga " + riga);
-                }
+                throw new LexicalException("Errore numerico alla riga " + riga + ": cifre decimali seguite da lettere");
             }
-        } catch (IOException e) {
-            // Gestisci le eccezioni di IO
-            throw new LexicalException("Carattere " + peekChar() + " alla riga " + riga + "\n", e);
+
+            if (count <= MAX_FLOAT_DECIMALS) 
+            {
+                return new Token(TokenType.FLOAT, riga, res.toString());
+            } 
+            else 
+            {
+                throw new LexicalException("Errore numerico alla riga " + riga + ": troppi decimali");
+            }
         }
     }
+
 
     private Token scanId() throws IOException, LexicalException 
     {
@@ -211,6 +246,11 @@ public class Scanner
             }
         } 
         while (!skipChars.contains(c) && !char_type_Map.containsKey(c));
+
+        if (temp.length() > 0 && Character.isDigit(temp.charAt(0))) 
+        {
+            throw new LexicalException("Errore identificatore alla riga " + riga + ": l'identificatore non può iniziare con un numero");
+        }
 
         if (keyWordsMap.containsKey(temp.toString())) 
         {
@@ -235,7 +275,6 @@ public class Scanner
     	}
     }
     
-
     private char peekChar() throws IOException 
     {
         try 
