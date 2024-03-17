@@ -39,6 +39,11 @@ public class Scanner
 
     private Token nextTk = null;
 
+    /**
+     * Metodo che si occupa di costruire un oggetto Scanner per eseguire l'analisi lessicale di un file.
+     * @param fileName è il nome del file da analizzare
+     * @throws FileNotFoundException se il file non viene trovato viene lanciata la eccezione
+     */
     public Scanner(String fileName) throws FileNotFoundException 
     {
 
@@ -78,6 +83,11 @@ public class Scanner
         this.keyWordsMap.put("int", TokenType.INT);
     }
 
+	/**
+	 * Metodo che si occupa di restituire il token successivo nell'input.
+	 * @return il token successivo nell'input.
+	 * @throws LexicalException se il token successivo non esiste viene lanciata l'eccezione
+	 */
     public Token nextToken() throws LexicalException 
     {
         if (nextTk != null) 
@@ -154,6 +164,12 @@ public class Scanner
         return null;
     }
 
+	/**
+	 * Metodo che si occupa di restituire il token successivo senza consumarlo
+	 * @return il token successivo
+	 * @throws LexicalException se il token successivo non esiste viene lanciata l'eccezione
+	 * @throws IOException se si verifica un errore di I/O viene lanciata l'eccezione
+	 */
     public Token peekToken() throws LexicalException, IOException
     {
     	if(nextTk==null)
@@ -163,6 +179,12 @@ public class Scanner
     	return nextTk;
     }
   
+    /**
+     * Metodo che si occupa di scansionare e restituire il token per un numero
+     * @return il token per un numero
+     * @throws LexicalException se il token non esiste viene lanciata l'eccezione
+     * @throws IOException se si verifica un errore di I/O viene lanciata l'eccezione
+     */
     private Token scanNumber() throws LexicalException, IOException 
     {
         int MAX_FLOAT_DECIMALS = 5;
@@ -227,7 +249,12 @@ public class Scanner
         }
     }
 
-
+	/**
+	 * Metodo che si occupa di scansionare e restituire il token per un identificatore
+	 * @return il token per un identificatore
+	 * @throws IOException se si verifica un errore di I/O viene lanciata l'eccezione
+	 * @throws LexicalException se il token non esiste viene lanciata l'eccezione
+	 */
     private Token scanId() throws IOException, LexicalException 
     {
         StringBuilder temp = new StringBuilder();
@@ -262,6 +289,11 @@ public class Scanner
         }
     }
 
+	/**
+	 * Metodo che si occupa di leggere un carattere dal buffer e lo restituisce
+	 * @return il carattere
+	 * @throws IOException se si verifica un errore di I/O viene lanciata l'eccezione
+	 */
     private char readChar() throws IOException 
     {
     	try 
@@ -275,6 +307,11 @@ public class Scanner
     	}
     }
     
+	/**
+	 * Metodo che restituisce il carattere successivo senza consumarlo
+	 * @return il carattere successivo
+	 * @throws IOException se si verifica un errore di I/O viene lanciata l'eccezione
+	 */
     private char peekChar() throws IOException 
     {
         try 
@@ -287,7 +324,5 @@ public class Scanner
         {
             throw new IOException("Eccezione I/O\n", e);
         }
-
     }
-
 }
