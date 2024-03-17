@@ -56,7 +56,8 @@ class TestScanner
 	}
 	
 	@Test
-	public void testScanNumberINT() throws IOException, LexicalException {
+	public void testScanNumberINT() throws IOException, LexicalException 
+	{
 	    String path = "src/test/data/testScanner/testINT.txt";
 	    Scanner scanner = new Scanner(path);
 
@@ -81,7 +82,8 @@ class TestScanner
 	}
 
 	@Test
-	public void testScanNumberFLOAT() throws IOException, LexicalException {
+	public void testScanNumberFLOAT() throws IOException, LexicalException 
+	{
 	    String path = "src/test/data/testScanner/testFLOAT.txt";
 	    Scanner scanner = new Scanner(path);
 	    
@@ -111,7 +113,8 @@ class TestScanner
 	}
 
 	@Test
-	public void testScanOperators() throws IOException, LexicalException {
+	public void testScanOperators() throws IOException, LexicalException 
+	{
 	    String path = "src/test/data/testScanner/testOperators.txt";
 	    Scanner scanner = new Scanner(path);
 
@@ -169,7 +172,8 @@ class TestScanner
 	}
 	
 	@Test
-	public void testScanIdKeywords() throws IOException, LexicalException {
+	public void testScanIdKeywords() throws IOException, LexicalException 
+	{
 	    String path = "src/test/data/testScanner/testIdKeywords.txt";
 	    Scanner scanner = new Scanner(path);
 
@@ -219,7 +223,8 @@ class TestScanner
 	}
 
 	@Test
-	public void testScanKeywords() throws IOException, LexicalException {
+	public void testScanKeywords() throws IOException, LexicalException 
+	{
 	    String path = "src/test/data/testScanner/testKeywords.txt";
 	    Scanner scanner = new Scanner(path);
 
@@ -244,7 +249,8 @@ class TestScanner
 	}
 
 	@Test
-	public void testScanGenerale() throws IOException, LexicalException {
+	public void testScanGenerale() throws IOException, LexicalException 
+	{
 	    String path = "src/test/data/testScanner/testGenerale.txt";
 	    Scanner scanner = new Scanner(path);
 
@@ -356,16 +362,16 @@ class TestScanner
 	    Scanner scanner = new Scanner(path);
 	     
 	    LexicalException ex1 = assertThrows(LexicalException.class, ()->{scanner.nextToken();});
-		assertEquals("Errore numerico alla riga 1: valore non valido, un intero non può iniziare con '0'", ex1.getMessage());
+		assertEquals("Eccezione alla riga 1 data dal carattere '0'", ex1.getMessage());
 		
 		LexicalException ex2 = assertThrows(LexicalException.class, ()->{scanner.nextToken();});
-		assertEquals("Errore numerico alla riga 2: cifre seguite da lettere", ex2.getMessage());
+		assertEquals("Eccezione alla riga 2 data dal carattere 'a'", ex2.getMessage());
 		
 		LexicalException ex3 = assertThrows(LexicalException.class, ()->{scanner.nextToken();});
-		assertEquals("Errore numerico alla riga 3: cifre seguite da lettere", ex3.getMessage());
+		assertEquals("Eccezione alla riga 3 data dal carattere 'a'", ex3.getMessage());
 		
 		LexicalException ex4 = assertThrows(LexicalException.class, ()->{scanner.nextToken();});
-		assertEquals("Errore numerico alla riga 4: troppi decimali", ex4.getMessage());
+		assertEquals("Eccezione alla riga 4, cifre decimali maggiori di 5", ex4.getMessage());
 		
 	}
 

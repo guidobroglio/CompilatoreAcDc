@@ -197,91 +197,204 @@ public class Scanner
     }
   
     /**
-     * Metodo che si occupa di scansionare e restituire il token per un numero
-     * @return il token per un numero
-     * @throws LexicalException se il token non esiste viene lanciata l'eccezione
-     * @throws IOException se si verifica un errore di I/O viene lanciata l'eccezione
+     * Questo metodo si occupa di analizzare il testo e restituire il token per un numero.
+     * Se il numero trovato è un intero, restituisce un token INT.
+     * Se il numero trovato è un float, restituisce un token FLOAT.
+     * 
+     * @return Il token per il numero analizzato.
+     * 
+     * @throws LexicalException se si verifica un errore nel processo di scansione, ad esempio se viene trovato un carattere non valido.
+     * @throws IOException se si verifica un errore di I/O durante la lettura del testo.
      */
-    private Token scanNumber() throws LexicalException, IOException 
+    private Token scanNumber() throws IOException, LexicalException 
     {
-        // massime cifre decimali
-        int MAX_FLOAT_DECIMALS = 5;
-
-        StringBuilder res = new StringBuilder("");
-
-        // legge il carattere
-        char num = readChar();
-        res.append(num);
-
-        // flag per il tipo di numero (float o intero)
-        boolean isFloat = false;
-
-        // controllo se il numero inizia con '0'
-        if (num == '0') 
+        try 
         {
-            // Se il prossimo carattere è un punto, allora è sicuramente un float
-            if (peekChar() == '.') 
-            {
-                isFloat = true;
-            }
-            // Altrimenti, è un intero
-            // Non abbiamo bisogno di impostare isFloat a true qui poiché è già false per impostazione predefinita
-        }
-
-        // leggo le cifre
-        while (this.digits.contains(peekChar())) 
-        {
-            res.append(readChar());
-        }
-
-        // controllo che le cifre siano seguite da lettere, in tal caso lancio l'eccezione
-        if (letters.contains(peekChar())) 
-        {
-            res.append(readChar());
-            throw new LexicalException("Errore numerico alla riga " + riga + ": cifre seguite da lettere");
-        }
-
-        // controllo che il numero inizi con '0', in tal caso lancio l'eccezione
-        else if (!isFloat && res.length() > 1 && res.charAt(0) == '0') 
-        {
-            throw new LexicalException("Errore numerico alla riga " + riga + ": valore non valido, un intero non può iniziare con '0'");
-        }
-
-        // controllo se il numero è un float
-        else if (peekChar() != '.') 
-        {
-            return new Token(isFloat ? TokenType.FLOAT : TokenType.INT, riga, res.toString());
-        } 
-        else 
-        {
-            res.append(readChar());
-
-            int count = 0;
-            while (this.digits.contains(peekChar())) 
-            {
-                res.append(readChar());
-                count++;
-            }
+            // Stringa temporanea per memorizzare il numero in fase di analisi
+            StringBuilder temp = new StringBuilder();
             
-            // controllo che le cifre decimali siano seguite da lettere, in tal caso lancio l'eccezione
-            if (letters.contains(peekChar())) 
-            {
-                res.append(readChar());
-                throw new LexicalException("Errore numerico alla riga " + riga + ": cifre seguite da lettere");
-            }
+            // Carattere corrente durante l'analisi
+            char c = readChar();
             
-            // controllo che il numero non superi il numero massimo di cifre decimali
-            else if (count <= MAX_FLOAT_DECIMALS) 
+            // Carattere di errore (se presente)
+            char errChar = '\0';
+            
+            // Aggiungiamo il primo carattere alla stringa temporanea
+            temp.append(c);
+            
+            // Se il primo carattere è '0'
+            if (c == '0') 
             {
-                return new Token(TokenType.FLOAT, riga, res.toString());
+                // Verifichiamo il carattere successivo
+                c = peekChar();
+                
+                // Se è un punto, significa che abbiamo un float iniziato con 0.
+                if (c == '.') 
+                {
+                    // Impostiamo il flag float a true e aggiungiamo il punto alla stringa temporanea
+                    boolean isFloat = true;
+                    errChar = '\0';
+                    temp.append(c);
+                    readChar();
+                    
+                    // Chiamiamo il metodo scanFloat per analizzare il float
+                    return scanFloat(temp.toString());
+                } 
+                // Se è un numero, allora abbiamo un intero iniziato con 0.
+                else if (digits.contains(c)) 
+                {
+                    errChar = '\0';
+                    // Continuiamo a leggere i numeri fino a quando non troviamo un altro carattere
+                    do 
+                    {
+                        c = peekChar();
+                        if (digits.contains(c)) 
+                        {
+                            temp.append(c);
+                            readChar();
+                        } 
+                        else if (!skipChars.contains(c) && !char_type_Map.containsKey(c) && c != '.') 
+                        {
+                            errChar = c;
+                            readChar();
+                        }
+                    } 
+                    while (!skipChars.contains(c) && !char_type_Map.containsKey(c) && c != '.');
+                    
+                    // Se è presente un carattere di errore, lanciamo un'eccezione
+                    if (errChar != '\0') 
+                    {
+                        throw new LexicalException("Eccezione alla riga " + riga + " data dal carattere " + "'" + errChar + "'");
+                    }
+                    
+                    // Se abbiamo trovato un punto, chiamiamo il metodo scanFloat
+                    if (c == '.') 
+                    {
+                        temp.append(c);
+                        readChar();
+                        return scanFloat(temp.toString());
+                    } 
+                    // Altrimenti restituiamo un token INT
+                    else 
+                    {
+                        throw new LexicalException("Eccezione alla riga " + riga + " data dal carattere " + "'" + temp.charAt(temp.length() - 1) + "'");
+                    }
+                } 
+                // Se è uno dei caratteri speciali o un carattere non valido, restituiamo un token INT
+                else if (skipChars.contains(c) || char_type_Map.containsKey(c)) 
+                {
+                    return new Token(TokenType.INT, riga, temp.toString());
+                } 
+                // Se non è né un numero né uno dei caratteri speciali, lanciamo un'eccezione
+                else 
+                {
+                    throw new LexicalException("Eccezione alla riga " + riga + " data dal carattere " + "'" + c + "'");
+                }
             } 
+            // Se il primo carattere non è '0'
             else 
             {
-                throw new LexicalException("Errore numerico alla riga " + riga + ": troppi decimali");
+                // Continuiamo a leggere i numeri fino a quando non troviamo un altro carattere
+                do 
+                {
+                    c = peekChar();
+                    if (digits.contains(c)) 
+                    {
+                        temp.append(c);
+                        readChar();
+                    } 
+                    else if (!skipChars.contains(c) && !char_type_Map.containsKey(c) && c != '.') 
+                    {
+                        errChar = c;
+                        readChar();
+                    }
+                } 
+                while (!skipChars.contains(c) && !char_type_Map.containsKey(c) && c != '.');
+                
+                // Se è presente un carattere di errore, lanciamo un'eccezione
+                if (errChar != '\0') 
+                {
+                    throw new LexicalException("Eccezione alla riga " + riga + " data dal carattere " + "'" + errChar + "'");
+                }
+                
+                // Se non è presente un punto, restituiamo un token INT
+                if (c != '.') 
+                {
+                    return new Token(TokenType.INT, riga, temp.toString());
+                } 
+                // Se è presente un punto, chiamiamo il metodo scanFloat
+                else 
+                {
+                    temp.append('.');
+                    readChar();
+                    return scanFloat(temp.toString());
+                }
             }
+        } 
+        // Gestione delle eccezioni di I/O
+        catch (IOException e) 
+        {
+            throw new LexicalException("Errore di IO alla riga " + riga, e);
         }
     }
-
+	
+    /**
+     * Metodo che si occupa di analizzare i valori float.
+     * 
+     * @param temp La stringa temporanea contenente la parte float da analizzare.
+     * @return Il token per il float analizzato.
+     * @throws LexicalException se si verifica un errore nel processo di scansione, ad esempio se viene trovato un carattere non valido.
+     * @throws IOException se si verifica un errore di I/O durante la lettura del testo.
+     */
+    private Token scanFloat(String temp) throws IOException, LexicalException 
+    {
+        // Carattere corrente durante l'analisi
+        char c;
+        
+        // Carattere di errore (se presente)
+        char errChar = '\0';
+        
+        // Contatore per le cifre decimali
+        int counter = 0;
+        
+        // Continuiamo a leggere finché non troviamo un carattere che non appartiene a un float
+        do 
+        {
+            c = peekChar();
+            
+            // Se il carattere è una cifra, aggiungiamolo alla stringa temporanea e incrementiamo il contatore
+            if (digits.contains(c)) 
+            {
+                temp += c;
+                readChar();
+                counter++;
+            } 
+            // Se il carattere non è una cifra e non è uno dei caratteri speciali, lo consideriamo un errore
+            else if (!skipChars.contains(c) && !char_type_Map.containsKey(c)) 
+            {
+                errChar = c;
+                readChar();
+            }
+        } 
+        while (!skipChars.contains(c) && !char_type_Map.containsKey(c) && counter <= 5);
+        
+        // Se è presente un carattere di errore, lanciamo un'eccezione
+        if (errChar != '\0') 
+        {
+            throw new LexicalException("Eccezione alla riga " + riga + " data dal carattere " + "'" + errChar + "'");
+        }
+        
+        // Se abbiamo trovato più di 5 cifre decimali, lanciamo un'eccezione
+        if (counter > 5) 
+        { 
+            throw new LexicalException("Eccezione alla riga " + riga + ", cifre decimali maggiori di 5");
+        } 
+        // Altrimenti, restituiamo un token FLOAT
+        else 
+        {
+            return new Token(TokenType.FLOAT, riga, temp);
+        }
+    }
     
 	/**
 	 * Metodo che si occupa di scansionare e restituire il token per un identificatore
