@@ -84,7 +84,7 @@ class TestScanner
 	public void testScanNumberFLOAT() throws IOException, LexicalException {
 	    String path = "src/test/data/testScanner/testFLOAT.txt";
 	    Scanner scanner = new Scanner(path);
-
+	    
 	    Token token = scanner.nextToken();
 	    assertEquals("098.8095", token.getVal());
 	    assertEquals(1, token.getRiga());

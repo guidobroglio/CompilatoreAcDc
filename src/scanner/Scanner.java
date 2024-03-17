@@ -46,17 +46,21 @@ public class Scanner
      */
     public Scanner(String fileName) throws FileNotFoundException 
     {
-
+		// inizializzazione del buffer di lettura per il file
         this.buffer = new PushbackReader(new FileReader(fileName));
+        
+        // Verifica se il buffer è null, in tal caso viene lanciata l'eccezione
         if(this.buffer==null)
         {
         	throw new FileNotFoundException("File non trovato");
         }
+        // inizializzazione il numero di riga ad 1
         riga = 1;
 
         // inizializzare campi che non hanno inizializzazione
         this.skipChars = new ArrayList<>(Arrays.asList(' ', '\t', '\n', '\r', EOF));
 
+        // inizializzazione dell'insieme di lettere maiuscole e minuscole
         this.letters = new ArrayList<>();
         for (char c = 'a'; c <= 'z'; c++) 
         {
@@ -66,9 +70,11 @@ public class Scanner
         {
             letters.add(c);
         }
-
+        
+        // inizializzazione dell'insieme di cifre
         this.digits = new ArrayList<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
 
+        // inizializzazione del mapping, associa i caratteri ai TokenType corrispondenti
         this.char_type_Map = new HashMap<>();
         this.char_type_Map.put('+', TokenType.PLUS);
         this.char_type_Map.put('-', TokenType.MINUS);
@@ -77,6 +83,7 @@ public class Scanner
         this.char_type_Map.put(';', TokenType.SEMI);
         this.char_type_Map.put('=', TokenType.OP_ASSIGN);
 
+		// inizializzazione del mapping, associa le parole chiave ai TokenType corrispondenti
         this.keyWordsMap = new HashMap<>();
         this.keyWordsMap.put("print", TokenType.PRINT);
         this.keyWordsMap.put("float", TokenType.FLOAT);
@@ -90,6 +97,7 @@ public class Scanner
 	 */
     public Token nextToken() throws LexicalException 
     {
+    	// Controllo se il tokern successico è già stato letto, in tal caso restituisco il token
         if (nextTk != null) 
         {
             Token next = nextTk;
@@ -100,13 +108,16 @@ public class Scanner
         char nextChar;
         try 
         {
+        	// Leggo il carattere senza consumarlo
             nextChar = peekChar();
             char skip;
             
+            // Salta gli spazi
             while (this.skipChars.contains(nextChar)) 
             {
                 skip = readChar();
                 
+                // Se il carattere letto è un carattere di fine riga, incrementa la riga
                 if (skip == '\n') 
                 {
                     nextChar = peekChar();
@@ -114,34 +125,39 @@ public class Scanner
                 } 
                 else 
                 {
+                	// Se il carattere letto è EOF, restituisco il token EOF
                     if (skip == EOF) 
                     {
                         Token token_eof = new Token(TokenType.EOF, riga);
                         return token_eof;
                     } 
+                    // Altrimenti legge il prossimo carattere
                     else 
                     {
                         nextChar = peekChar();
                     }
                 }
             }
-            
+            // Se il carattere letto è un numero chiama scanNumber
             if (this.digits.contains(nextChar)) 
             {
                 return scanNumber();
             }
             
+            // Se il carattere letto è una lettera chiama scanId
             if (this.letters.contains(nextChar)) 
             {
                 return scanId();
             }
             
+            // Se il carattere letto è un carattere '=', restituisce il token OP_ASSIGN
             if(peekChar()=='=')
             {
             	readChar();
             	return new Token(TokenType.OP_ASSIGN, riga, "=");
             }
             
+            // Se il carattere letto è un carattere '+', '-' o '*', restituisce il token corrispondente
             if (this.char_type_Map.containsKey(nextChar)) 
             {
                 char op = readChar();
@@ -172,6 +188,7 @@ public class Scanner
 	 */
     public Token peekToken() throws LexicalException, IOException
     {
+		// Controllo se il tokern successivo è stago già letto, in tal caso restituisco il token
     	if(nextTk==null)
     	{
     		nextTk=this.nextToken();
@@ -187,36 +204,50 @@ public class Scanner
      */
     private Token scanNumber() throws LexicalException, IOException 
     {
+        // massime cifre decimali
         int MAX_FLOAT_DECIMALS = 5;
 
         StringBuilder res = new StringBuilder("");
 
+        // legge il carattere
         char num = readChar();
         res.append(num);
 
+        // flag per il tipo di numero (float o intero)
         boolean isFloat = false;
 
+        // controllo se il numero inizia con '0'
         if (num == '0') 
         {
-            isFloat = true;
+            // Se il prossimo carattere è un punto, allora è sicuramente un float
+            if (peekChar() == '.') 
+            {
+                isFloat = true;
+            }
+            // Altrimenti, è un intero
+            // Non abbiamo bisogno di impostare isFloat a true qui poiché è già false per impostazione predefinita
         }
 
+        // leggo le cifre
         while (this.digits.contains(peekChar())) 
         {
             res.append(readChar());
         }
-        
+
+        // controllo che le cifre siano seguite da lettere, in tal caso lancio l'eccezione
         if (letters.contains(peekChar())) 
         {
             res.append(readChar());
             throw new LexicalException("Errore numerico alla riga " + riga + ": cifre seguite da lettere");
         }
 
+        // controllo che il numero inizi con '0', in tal caso lancio l'eccezione
         else if (!isFloat && res.length() > 1 && res.charAt(0) == '0') 
         {
             throw new LexicalException("Errore numerico alla riga " + riga + ": valore non valido, un intero non può iniziare con '0'");
         }
 
+        // controllo se il numero è un float
         else if (peekChar() != '.') 
         {
             return new Token(isFloat ? TokenType.FLOAT : TokenType.INT, riga, res.toString());
@@ -231,14 +262,16 @@ public class Scanner
                 res.append(readChar());
                 count++;
             }
-
+            
+            // controllo che le cifre decimali siano seguite da lettere, in tal caso lancio l'eccezione
             if (letters.contains(peekChar())) 
             {
                 res.append(readChar());
-                throw new LexicalException("Errore numerico alla riga " + riga + ": cifre decimali seguite da lettere");
+                throw new LexicalException("Errore numerico alla riga " + riga + ": cifre seguite da lettere");
             }
-
-            if (count <= MAX_FLOAT_DECIMALS) 
+            
+            // controllo che il numero non superi il numero massimo di cifre decimali
+            else if (count <= MAX_FLOAT_DECIMALS) 
             {
                 return new Token(TokenType.FLOAT, riga, res.toString());
             } 
@@ -249,6 +282,7 @@ public class Scanner
         }
     }
 
+    
 	/**
 	 * Metodo che si occupa di scansionare e restituire il token per un identificatore
 	 * @return il token per un identificatore
