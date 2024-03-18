@@ -180,7 +180,7 @@ class TestScanner
 	    Token token = scanner.nextToken();
 	    assertEquals(null, token.getVal());
 	    assertEquals(1, token.getRiga());
-	    assertEquals(TokenType.INT, token.getTipo());
+	    assertEquals(TokenType.TYINT, token.getTipo());
 
 	    token = scanner.nextToken();
 	    assertEquals("inta", token.getVal());
@@ -190,7 +190,7 @@ class TestScanner
 	    token = scanner.nextToken();
 	    assertEquals(null, token.getVal());
 	    assertEquals(2, token.getRiga());
-	    assertEquals(TokenType.FLOAT, token.getTipo());
+	    assertEquals(TokenType.TYFLOAT, token.getTipo());
 
 	    token = scanner.nextToken();
 	    assertEquals(null, token.getVal());
@@ -210,7 +210,7 @@ class TestScanner
 	    token = scanner.nextToken();
 	    assertEquals(null, token.getVal());
 	    assertEquals(6, token.getRiga());
-	    assertEquals(TokenType.INT, token.getTipo());
+	    assertEquals(TokenType.TYINT, token.getTipo());
 
 	    token = scanner.nextToken();
 	    assertEquals("nome", token.getVal());
@@ -236,12 +236,12 @@ class TestScanner
 	    token = scanner.nextToken();
 	    assertEquals(null, token.getVal());
 	    assertEquals(2, token.getRiga());
-	    assertEquals(TokenType.FLOAT, token.getTipo());
+	    assertEquals(TokenType.TYFLOAT, token.getTipo());
 
 	    token = scanner.nextToken();
 	    assertEquals(null, token.getVal());
 	    assertEquals(5, token.getRiga());
-	    assertEquals(TokenType.INT, token.getTipo());
+	    assertEquals(TokenType.TYINT, token.getTipo());
 
 	    token = scanner.nextToken();
 	    assertEquals(5, token.getRiga());
@@ -255,7 +255,7 @@ class TestScanner
 	    Scanner scanner = new Scanner(path);
 
 	    Token token = scanner.nextToken();
-	    assertEquals(TokenType.INT, token.getTipo());
+	    assertEquals(TokenType.TYINT, token.getTipo());
 	    assertEquals(null, token.getVal());
 	    assertEquals(1, token.getRiga());
 
@@ -290,7 +290,7 @@ class TestScanner
 	    assertEquals(2, token.getRiga());
 
 	    token = scanner.nextToken();
-	    assertEquals(TokenType.FLOAT, token.getTipo());
+	    assertEquals(TokenType.TYFLOAT, token.getTipo());
 	    assertEquals(null, token.getVal());
 	    assertEquals(4, token.getRiga());
 
@@ -379,8 +379,8 @@ class TestScanner
 	public void testPeekToken() throws IOException, LexicalException
 	{
 		Scanner s = new Scanner("src/test/data/testScanner/testGenerale.txt");
-		assertEquals(s.peekToken().getTipo(), TokenType.INT);
-		assertEquals(s.nextToken().getTipo(), TokenType.INT);
+		assertEquals(s.peekToken().getTipo(), TokenType.TYINT);
+		assertEquals(s.nextToken().getTipo(), TokenType.TYINT);
 		assertEquals(s.peekToken().getTipo(), TokenType.ID);
 		assertEquals(s.nextToken().getTipo(), TokenType.ID);
 		

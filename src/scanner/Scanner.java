@@ -86,8 +86,8 @@ public class Scanner
 		// inizializzazione del mapping, associa le parole chiave ai TokenType corrispondenti
         this.keyWordsMap = new HashMap<>();
         this.keyWordsMap.put("print", TokenType.PRINT);
-        this.keyWordsMap.put("float", TokenType.FLOAT);
-        this.keyWordsMap.put("int", TokenType.INT);
+        this.keyWordsMap.put("float", TokenType.TYFLOAT);
+        this.keyWordsMap.put("int", TokenType.TYINT);
     }
 
 	/**

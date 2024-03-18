@@ -27,22 +27,36 @@ public class Parser
 		Token tkn = scanner.peekToken();
 		switch(tkn.getTipo())
 		{
-			case FLOAT, INT, ID, PRINT, EOF:
+			case TYFLOAT, TYINT, ID, PRINT, EOF:
 				parseDSs();
 				match(TokenType.EOF);
 				return;
 			default:
-				throw new SyntacticException("errore sintattico: atteso token ' " + tkn.getTipo() + "' alla riga" + tkn.getRiga());
+				throw new SyntacticException("Errore sintattico: token '" + tkn.getTipo() + "' non valido alla riga " + tkn.getRiga());
 		}
 	}
 	
 	private void parseDSs() throws SyntacticException, LexicalException, IOException
 	{
 		Token tkn = scanner.peekToken();
-		while(tkn.getTipo().equals(TokenType.FLOAT) || tkn.getTipo().equals(TokenType.INT) || tkn.getTipo().equals(TokenType.ID))
+		switch(tkn.getTipo())
 		{
-			parseDcl();
-			tkn = scanner.peekToken();
+			case TYFLOAT, TYINT:
+				parseDcl();
+				parseDSs();
+				return;
+			
+			case ID, PRINT:
+				parseStm();
+				parseDSs();
+				return;
+			
+			case EOF:
+				match(TokenType.EOF);
+				return;
+				
+			default:
+				throw new SyntacticException("Errore sintattico: token '" + tkn.getTipo() + "' non valido alla riga " + tkn.getRiga());
 		}
 	}
 	
@@ -51,14 +65,14 @@ public class Parser
 		Token tkn = scanner.peekToken();
 		switch(tkn.getTipo())
 		{
-			case FLOAT:
-			case INT:
+			case TYFLOAT:
+			case TYINT:
 				parseTy();
 				match(TokenType.ID);
 				parseDclP();
 				return;
 			default:
-				throw new SyntacticException("errore sintattico: atteso token ' " + tkn.getTipo() + "' alla riga" + tkn.getRiga());
+				throw new SyntacticException("Errore sintattico: token '" + tkn.getTipo() + "' non valido alla riga " + tkn.getRiga());
 		}
 	}
 	
@@ -67,21 +81,27 @@ public class Parser
 		Token tkn = scanner.nextToken();
 		switch(tkn.getTipo())
 		{
-			case FLOAT:
-			case INT:
+			case TYFLOAT:
+			case TYINT:
 				return;
 			default:
-				throw new SyntacticException("errore sintattico: atteso token ' " + tkn.getTipo() + "' alla riga" + tkn.getRiga());
+				throw new SyntacticException("Errore sintattico: token '" + tkn.getTipo() + "' non valido alla riga " + tkn.getRiga());
 		}
 	}
 	
 	private void parseDclP() throws SyntacticException, LexicalException, IOException
 	{
 		Token tkn = scanner.peekToken();
-		while(tkn.getTipo().equals(TokenType.FLOAT) || tkn.getTipo().equals(TokenType.INT) || tkn.getTipo().equals(TokenType.ID))
+		switch(tkn.getTipo())
 		{
-			parseDcl();
-			tkn = scanner.peekToken();
+			case SEMI:
+				match(TokenType.SEMI);
+				return;
+			//case OP_ASSIGN:
+				//match(TokenType.OP_ASSIGN);
+				//parseExp();
+				//match(TokenType.SEMI);
+				//return;
 		}
 	}
 	
@@ -92,8 +112,15 @@ public class Parser
 		{
 			case PRINT:
 				return;
+				
+			case ID:
+				//match(TokenType.OP_ASSIGN);
+				//parseExp();
+				//match(TokenType.SEMI);
+				//return;
+				
 			default:
-				throw new SyntacticException("errore sintattico: atteso token ' " + tkn.getTipo() + "' alla riga" + tkn.getRiga());
+				throw new SyntacticException("Errore sintattico: token '" + tkn.getTipo() + "' non valido alla riga " + tkn.getRiga());
 		}
 	}
 	
@@ -106,7 +133,7 @@ public class Parser
 		}
 		else
 		{
-			throw new SyntacticException("errore sintattico: atteso token ' " + expectedType + "'alla riga" + tkn.getRiga());
+			throw new SyntacticException("Errore sintattico: token '" + expectedType + "' non valido alla riga " + tkn.getRiga());
 		}
 	}
 	
