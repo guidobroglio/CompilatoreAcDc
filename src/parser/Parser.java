@@ -102,7 +102,10 @@ public class Parser
 				//parseExp();
 				//match(TokenType.SEMI);
 				//return;
+			default:
+				throw new SyntacticException("Errore sintattico: token '" + tkn.getTipo() + "' non valido alla riga " + tkn.getRiga());
 		}
+
 	}
 	
 	private void parseStm() throws SyntacticException, LexicalException, IOException
