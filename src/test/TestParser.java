@@ -31,6 +31,7 @@ class TestParser
 		String path="src/test/data/testParser/testParserCorretto2.txt";
 		Scanner scanner = new Scanner(path);
 		Parser parser = new Parser(scanner);
+		assertDoesNotThrow(() -> {parser.parse();});
 	}
 	
 	@Test
@@ -50,7 +51,7 @@ class TestParser
 		Scanner scanner = new Scanner(path);
 		Parser parser = new Parser(scanner);
 		SyntacticException ex1 = assertThrows(SyntacticException.class, ()->{parser.parse();});
-		assertEquals("Errore sintattico: token 'OP_ASSIGN' non valido alla riga 2", ex1.getMessage());		
+		assertEquals("Errore sintattico: token 'TIMES' non valido alla riga 2", ex1.getMessage());		
 	}
 	
 	@Test
@@ -60,7 +61,7 @@ class TestParser
 		Scanner scanner = new Scanner(path);
 		Parser parser = new Parser(scanner);
 		SyntacticException ex1 = assertThrows(SyntacticException.class, ()->{parser.parse();});
-		assertEquals("Errore sintattico: token 'OP_ASSIGN' non valido alla riga 2", ex1.getMessage());
+		assertEquals("Errore sintattico: token 'INT' non valido alla riga 3", ex1.getMessage());
 	}
 	
 	@Test
@@ -90,7 +91,7 @@ class TestParser
 		Scanner scanner = new Scanner(path);
 		Parser parser = new Parser(scanner);
 		SyntacticException ex1 = assertThrows(SyntacticException.class, ()->{parser.parse();});
-		assertEquals("Errore sintattico: token 'OP_ASSIGN' non valido alla riga 2", ex1.getMessage());
+		assertEquals("Errore sintattico: token 'ID' non valido alla riga 3", ex1.getMessage());
 	}
 	
 	@Test
