@@ -1,4 +1,5 @@
 package ast;
+import visitor.*;
 
 public class NodeBinOp extends NodeExpr
 {
@@ -42,5 +43,11 @@ public class NodeBinOp extends NodeExpr
 	public String toString()
 	{
 		return this.left.toString() + " " + this.op.toString() + " " + this.right.toString();
+	}
+
+	@Override
+	public void accept(IVisitor visitor) 
+	{
+		visitor.visit(this);
 	}
 }

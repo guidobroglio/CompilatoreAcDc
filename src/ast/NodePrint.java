@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.IVisitor;
+
 public class NodePrint extends NodeStm
 {
 	private NodeId id;
@@ -18,5 +20,11 @@ public class NodePrint extends NodeStm
 	public String toString()
 	{
 		return "Print: [" + this.id.toString() + "]"; 
+	}
+	
+	@Override
+	public void accept(IVisitor visitor)
+	{
+		visitor.visit(this);
 	}
 }

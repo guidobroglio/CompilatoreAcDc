@@ -2,14 +2,9 @@ package ast;
 
 public class TypeDescriptor 
 {
-	public enum TipoTD
-	{
-		INT, FLOAT, OK, ERROR
-	}
-	
 	private TipoTD tipo;
 	private String msg;
-	
+		
 	public TypeDescriptor(TipoTD tipo)
 	{
 		this.tipo = tipo;
@@ -28,7 +23,17 @@ public class TypeDescriptor
 	
 	public TipoTD getTipo()
 	{
-		return tipo;
+		return this.tipo;
+	}
+	
+	public void setMsg(String msg)
+	{
+		this.msg = msg;
+	}
+	
+	public void setTipo(TipoTD tipo)
+	{
+		this.tipo = tipo;
 	}
 	
 	public boolean compatibile(TipoTD tD)
@@ -41,5 +46,5 @@ public class TypeDescriptor
 		{
 			return false;
 		}
-	}	
+	}
 }

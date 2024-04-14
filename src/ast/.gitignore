@@ -1,0 +1,17 @@
+/LangOper.class
+/LangType.class
+/NodeAST.class
+/NodeAssign.class
+/NodeBinOp.class
+/NodeConvert.class
+/NodeCost.class
+/NodeDecSt.class
+/NodeDecl.class
+/NodeDeref.class
+/NodeExpr.class
+/NodeId.class
+/NodePrint.class
+/NodeProgram.class
+/NodeStm.class
+/TipoTD.class
+/TypeDescriptor.class
