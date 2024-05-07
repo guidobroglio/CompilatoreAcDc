@@ -1,6 +1,7 @@
 package token;
 
-public class Token {
+public class Token 
+{
 
 	private int riga;
 	private TokenType tipo;
