@@ -1,10 +1,10 @@
 package symbolTable;
-import java.util.*;
 import ast.LangType;
 
 public class Attributes 
 {
 	private LangType type;
+	private char registro;
 	
 	public Attributes(LangType type)
 	{
@@ -14,5 +14,15 @@ public class Attributes
 	public LangType getType()
 	{
 		return type;
+	}
+	
+	public void setRegistro(char registro)
+	{
+		this.registro = registro;
+	}
+	
+	public char getRegistro()
+	{
+		return registro;
 	}
 }

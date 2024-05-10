@@ -1,6 +1,5 @@
 package visitor;
 import ast.*;
-import java.util.ArrayList;
 import symbolTable.*;
 
 /**
@@ -42,12 +41,13 @@ public class TypeCheckingVisitor implements IVisitor
 	 */
 	@Override
 	public void visit(NodeProgram node) {
-	    for (NodeDecSt decSt : node.getDecSts()) {
+	    for (NodeDecSt decSt : node.getDecSts()) 
+	    {
 	        // Delega la visita del nodo NodeDecSt corrente a questo stesso visitor
 	        decSt.accept(this);
 	        
 	        // Verifica se il tipo corrente è compatibile con TipoTD.ERROR
-	        if (type.compatibile(TipoTD.ERROR)) {
+	        if (type.getTipo().equals(TipoTD.ERROR)) {
 	            // Se è compatibile, imposta un nuovo TypeDescriptor con tipo TipoTD.ERROR e il messaggio di errore corrente
 	            type = new TypeDescriptor(TipoTD.ERROR, type.getMsg());
 	            return; // Interrompe la visita prematuramente in caso di errore
@@ -241,36 +241,30 @@ public class TypeCheckingVisitor implements IVisitor
 	@Override
 	public void visit(NodeAssign node) 
 	{
-	    // Visita l'identificatore all'interno del nodo NodeAssign
 	    NodeId id = node.getId();
 	    id.accept(this);
-	    TypeDescriptor idType = type;
+	    TypeDescriptor idType = new TypeDescriptor(type.getTipo(), type.getMsg());;
 
-	    // Visita l'espressione all'interno del nodo NodeAssign
 	    NodeExpr expr = node.getExpr();
 	    expr.accept(this);
 	    TypeDescriptor exprType = new TypeDescriptor(type.getTipo(), type.getMsg());
-
-	    // Controlla i tipi per determinare la compatibilità dell'assegnazione	    if (idType.compatibile(TipoTD.ERROR) || exprType.compatibile(TipoTD.ERROR))
+	    
+	    if(idType.compatibile(exprType))
 	    {
-	        // Se idType è compatibile con TipoTD.ERROR, imposta il tipo corrente come TipoTD.ERROR con lo stesso messaggio di idType
-	        type = new TypeDescriptor(TipoTD.ERROR, idType.getMsg());
-	        return;
-	    }	    else if (idType.compatibile(exprType.getTipo())) 
-	    {
-	        // Se idType e exprType hanno lo stesso tipo, imposta il tipo corrente come TipoTD.OK
-	        type = new TypeDescriptor(TipoTD.OK);
-	    }  
-	    else if (exprType.compatibile(idType.getTipo())) 
-	    {
-	        // Se exprType è compatibile con il tipo di idType, imposta il tipo corrente come TipoTD.OK
-	        type = new TypeDescriptor(TipoTD.OK);
-	    } 
-	    else 
-	    {
-	        // In tutti gli altri casi, imposta il tipo corrente come TipoTD.ERROR con un messaggio "Assegnazione non compatibile"
-	        type = new TypeDescriptor(TipoTD.ERROR, "Assegnazione non compatibile");
+		    type.setTipo(TipoTD.OK);
 	    }
+	    
+	    else if(idType.getTipo() == TipoTD.ERROR || exprType.getTipo() == TipoTD.ERROR)
+	    {
+		    type.setTipo(TipoTD.ERROR);
+		    type.setMsg(idType.getMsg() + "" + exprType.getMsg());
+	    }
+	    
+	    else
+	    {
+		    type.setTipo(TipoTD.ERROR);
+		    type.setMsg("Assegnazione incompatibile");
+	    }	    
 	}
 
 	/**

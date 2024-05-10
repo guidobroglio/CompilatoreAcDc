@@ -67,7 +67,7 @@ class TestTypeChecking
 			NodeProgram node = new Parser(new Scanner("src/test/data/testTypeChecking/4_tipoNonCompatibile.txt")).parse();
 			var typeCheckingVisitor = new TypeCheckingVisitor();
 			node.accept(typeCheckingVisitor);
-			TypeDescriptor type = new TypeDescriptor(TipoTD.ERROR, "Assegnazione non compatibile");
+			TypeDescriptor type = new TypeDescriptor(TipoTD.ERROR, "Assegnazione incompatibile");
 			assertEquals(type.getTipo(), typeCheckingVisitor.getType().getTipo());
 			assertEquals(type.getMsg(), typeCheckingVisitor.getType().getMsg());
 		});
@@ -103,7 +103,6 @@ class TestTypeChecking
 		});
 	}
 	
-	
 	@Test
 	void testCorretto3() throws FileNotFoundException, LexicalException, SyntacticException, IOException
 	{
@@ -117,7 +116,6 @@ class TestTypeChecking
 			assertEquals("", typeCheckingVisitor.getType().getMsg());
 			assertEquals(TipoTD.OK, typeCheckingVisitor.getType().getTipo());
 		});
-	}
-	
+	}	
 	
 }

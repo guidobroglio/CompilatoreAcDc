@@ -80,10 +80,10 @@ public class TypeDescriptor
      * @param tD Il tipo di dato (TipoTD) da confrontare con questo TypeDescriptor
      * @return true se i tipi sono uguali o se tipo è FLOAT e tD è INT, false altrimenti
      */
-    public boolean compatibile(TipoTD tD) 
+    public boolean compatibile(TypeDescriptor tD) 
     {
-    	boolean cond1=(tipo==tD || tipo!=TipoTD.ERROR && tD!=TipoTD.ERROR);
-    	boolean cond2=(tipo==TipoTD.FLOAT && tD==TipoTD.INT);
+    	boolean cond1=(tipo==tD.getTipo() && tipo!=TipoTD.ERROR && tD.getTipo()!=TipoTD.ERROR);
+    	boolean cond2=(tipo==TipoTD.FLOAT && tD.getTipo()==TipoTD.INT);
 		return cond1 || cond2;
     }
 }

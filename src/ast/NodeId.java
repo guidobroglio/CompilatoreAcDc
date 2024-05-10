@@ -1,10 +1,12 @@
 package ast;
 
 import visitor.*;
+import symbolTable.*;
 
 public class NodeId extends NodeAST
 {
 	private String nome;
+	private Attributes definition;
 	
 	public NodeId(String nome)
 	{
@@ -15,7 +17,17 @@ public class NodeId extends NodeAST
 	{ 
 		return this.nome; 
 	}
+	
+	public Attributes getDefinition()
+	{
+		return definition;
+	}
 
+	public void setDefinition(Attributes definition)
+	{
+		this.definition=definition;
+	}
+	
 	@Override
 	public String toString() 
 	{
