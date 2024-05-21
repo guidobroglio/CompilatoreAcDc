@@ -10,9 +10,14 @@ import exception‎.*;
 import token.*;
 
 /**
+ * La classe Scanner implementa un analizzatore lessicale per un file.
+ * Analizza l'input carattere per carattere e produce token corrispondenti.
  * 
- * @author Guido Broglio 20043973
- *
+ * @see exception.LexicalException
+ * @see token.Token
+ * @see token.TokenType
+ * 
+ * @autor Guido Broglio 20043973
  */
 
 public class Scanner 
@@ -20,7 +25,6 @@ public class Scanner
     final char EOF = (char) -1;
     private int riga;
     private PushbackReader buffer;
-    private Token token;
 
     // skpChars: insieme caratteri di skip (include EOF) e inizializzazione
     private List<Character> skipChars;
@@ -31,7 +35,7 @@ public class Scanner
     // digits: cifre e inizializzazione
     private List<Character> digits;
 
-    // char_type_Map: mapping fra caratteri '+', '-', '*', '/', ';', '=', ';' e il TokenType corrispondente
+    // char_type_Map: mapping fra caratteri '+', '-', '*', '/', ';', '=',  e il TokenType corrispondente
     private Map<Character, TokenType> char_type_Map;
 
     // keyWordsMap: mapping fra le stringhe "print", "float", "int" e il TokenType corrispondente
@@ -232,7 +236,6 @@ public class Scanner
                 if (c == '.') 
                 {
                     // Impostiamo il flag float a true e aggiungiamo il punto alla stringa temporanea
-                    boolean isFloat = true;
                     errChar = '\0';
                     temp.append(c);
                     readChar();

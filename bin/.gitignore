@@ -1,10 +1,6 @@
+/test/
 /visitor/
 /ast/
-/.classpath
-/.project
-/test/
-/exception‎/
-/parser/
-/scanner/
 /symbolTable/
-/token/
+/scanner/
+/parser/

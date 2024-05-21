@@ -83,7 +83,7 @@ class TestTypeChecking
 			node.accept(typeCheckingVisitor);
 			assertEquals(LangType.FLOAT, SymbolTable.lookup("a").getType());
 			assertEquals(LangType.INT, SymbolTable.lookup("b").getType());
-			assertEquals("", typeCheckingVisitor.getType().getMsg());
+			assertEquals(null, typeCheckingVisitor.getType().getMsg());
 			assertEquals(TipoTD.OK, typeCheckingVisitor.getType().getTipo());
 		});
 	}
@@ -98,7 +98,7 @@ class TestTypeChecking
 			node.accept(typeCheckingVisitor);
 			assertEquals(LangType.FLOAT, SymbolTable.lookup("a").getType());
 			assertEquals(LangType.INT, SymbolTable.lookup("b").getType());
-			assertEquals("", typeCheckingVisitor.getType().getMsg());
+			assertEquals(null, typeCheckingVisitor.getType().getMsg());
 			assertEquals(TipoTD.OK, typeCheckingVisitor.getType().getTipo());
 		});
 	}
@@ -113,7 +113,7 @@ class TestTypeChecking
 			node.accept(typeCheckingVisitor);
 			assertEquals(LangType.FLOAT, SymbolTable.lookup("a").getType());
 			assertEquals(LangType.INT, SymbolTable.lookup("b").getType());
-			assertEquals("", typeCheckingVisitor.getType().getMsg());
+			assertEquals(null, typeCheckingVisitor.getType().getMsg());
 			assertEquals(TipoTD.OK, typeCheckingVisitor.getType().getTipo());
 		});
 	}	

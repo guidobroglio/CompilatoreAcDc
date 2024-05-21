@@ -1,4 +1,5 @@
 package visitor;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,7 +12,7 @@ import java.util.Arrays;
 public class Registri {
 
     /** Lista statica contenente i registri disponibili */
-    public static ArrayList<Character> registri;
+    private static ArrayList<Character> registri;
 
     /**
      * Inizializza l'insieme dei registri con tutte le lettere dall' 'a' alla 'z'.
@@ -27,24 +28,13 @@ public class Registri {
 
     /**
      * Restituisce il primo registro disponibile e lo rimuove dall'insieme dei registri.
-     * Se non ci sono registri disponibili, ritorna 'a' (il primo della sequenza) e non lo rimuove.
+     * Se non ci sono registri disponibili, ritorna '\0' (il carattere nullo) e non lo rimuove.
      * 
-     * @return Il registro disponibile
+     * @return Il registro disponibile, oppure '\0' se non ci sono registri disponibili
      */
     public static char newRegister() 
     {
-        char registro;
-        if (registri.isEmpty()) 
-        {
-            // Se non ci sono registri disponibili, ritorna 'a' (il primo della sequenza) e non lo rimuove
-            registro = 'a';
-        } 
-        else 
-        {
-            // Ottiene il primo registro disponibile e lo rimuove dall'insieme dei registri
-            registro = registri.get(0);
-            registri.remove(0);
-        }
-        return registro;
+        return registri.isEmpty() ? '\0' : registri.remove(0);
     }
+
 }

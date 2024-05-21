@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import exception‎.LexicalException;
 
-import org.junit.*;
 import token.*;
 import scanner.*;
 

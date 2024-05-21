@@ -9,9 +9,16 @@ import token.*;
 import exception‎.*;
 
 /**
+ * La classe Parser implementa un parser per analizzare la sintassi di un programma sorgente.
+ * Utilizza uno scanner per ottenere i token dal programma sorgente e costruisce un albero sintattico.
+ * 
+ * @see scanner.Scanner
+ * @see token.Token
+ * @see ast.NodeProgram
+ * @see exception.SyntacticException
+ * @see exception.LexicalException
  * 
  * @author Guido Lorenzo Broglio 20043973
- *
  */
 
 public class Parser 

@@ -9,8 +9,6 @@ import java.io.*;
 import org.junit.jupiter.api.*;
 import parser.Parser;
 import scanner.Scanner;
-import token.*;
-import java.util.*;
 
 import exception‎.*;
 
@@ -121,5 +119,5 @@ class TestParser
 		Scanner scanner = new Scanner(path);
 		Parser parser = new Parser(scanner);
 		assertDoesNotThrow(() -> {parser.parse();});
-	}	
+	}
 }

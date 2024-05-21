@@ -7,10 +7,12 @@ import org.junit.jupiter.api.Test;
 import token.Token;
 import token.TokenType;
 
-class TestToken {
+class TestToken 
+{
 
     @Test
-    void testToString() {
+    void testToString() 
+    {
         // Test per TokenType.INT
         Token token1 = new Token(TokenType.INT, 3, ";");
         assertEquals(TokenType.INT, token1.getTipo());

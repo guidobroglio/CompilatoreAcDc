@@ -3,7 +3,25 @@ package ast;
 /**
  * Questa classe rappresenta un descrittore di tipo che contiene informazioni
  * sul tipo di dato (TipoTD) e un messaggio associato.
- * @author Guido Lorenzo Broglio 20043973
+ * 
+ * Questa classe include i seguenti metodi:
+ * - Costruttore TypeDescriptor(TipoTD tipo): crea un TypeDescriptor con il tipo specificato e nessun messaggio.
+ * - Costruttore TypeDescriptor(TipoTD tipo, String msg): crea un TypeDescriptor con il tipo e il messaggio specificati.
+ * - getMsg(): restituisce il messaggio associato al TypeDescriptor.
+ * - getTipo(): restituisce il tipo di dato (TipoTD) del TypeDescriptor.
+ * - setMsg(String msg): imposta il messaggio associato al TypeDescriptor.
+ * - setTipo(TipoTD tipo): imposta il tipo di dato (TipoTD) del TypeDescriptor.
+ * - compatibile(TypeDescriptor tD): verifica se questo TypeDescriptor è compatibile con un altro TipoTD.
+ * 
+ * I tipi di dato (TipoTD) sono:
+ * - INT: il tipo intero.
+ * - FLOAT: il tipo floating point.
+ * - OK: utilizzato per indicare un'esecuzione corretta o un'espressione corretta.
+ * - ERROR: utilizzato per indicare un errore o un'espressione non corretta.
+ * 
+ * @author Guido Lorenzo Broglio
+ * @version 1.0
+ * @see TipoTD
  */
 public class TypeDescriptor 
 {
@@ -19,7 +37,6 @@ public class TypeDescriptor
     public TypeDescriptor(TipoTD tipo) 
     {
         this.tipo = tipo;
-        this.msg = "";
     }
 
     /**
