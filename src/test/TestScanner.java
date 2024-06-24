@@ -11,6 +11,12 @@ import exception‎.LexicalException;
 import token.*;
 import scanner.*;
 
+/**
+ * La classe TestScanner implementa i test per il file relativi allo Scanner.
+ * 
+ * @author Guido Lorenzo Broglio mat 20043973
+ *
+ */
 class TestScanner 
 {	
 	@Test

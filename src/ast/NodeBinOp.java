@@ -3,7 +3,8 @@ package ast;
 import visitor.IVisitor;
 
 /**
- * La classe NodeBinOp rappresenta un nodo che contiene un'operazione binaria nell'albero sintattico astratto (AST).
+ * La classe NodeBinOp rappresenta un nodo che contiene un'operazione binaria nell'albero 
+ * sintattico astratto (AST).
  * 
  * @see visitor.IVisitor
  * 
@@ -40,9 +41,9 @@ public class NodeBinOp extends NodeExpr
     }
     
     /**
-     * Restituisce il nodo espressione sinistro.
+     * Restituisce il nodo dell'espressione a sinistra.
      * 
-     * @return il nodo espressione sinistro
+     * @return il nodo dell'espressione a sinistra
      */
     public NodeExpr getLeft()
     {
@@ -50,9 +51,9 @@ public class NodeBinOp extends NodeExpr
     }
     
     /**
-     * Restituisce il nodo espressione destro.
+     * Restituisce il nodo dell'espressione a destra.
      * 
-     * @return il nodo espressione destro
+     * @return il nodo dell'espressione a destra
      */
     public NodeExpr getRight()
     {
@@ -60,9 +61,9 @@ public class NodeBinOp extends NodeExpr
     }
     
     /**
-     * Imposta il nodo espressione sinistro.
+     * Imposta il nodo dell'espressione a sinistra.
      * 
-     * @param exp il nodo espressione sinistro da impostare
+     * @param exp il nodo dell'espressione a sinistra da impostare
      */
     public void setLeft(NodeExpr exp)
     {
@@ -70,21 +71,32 @@ public class NodeBinOp extends NodeExpr
     }
     
     /**
-     * Imposta il nodo espressione destro.
+     * Imposta il nodo dell'espressione a destra.
      * 
-     * @param exp il nodo espressione destro da impostare
+     * @param exp il nodo dell'espressione a destra da impostare
      */
     public void setRight(NodeExpr exp)
     {
         this.right = exp;
     }
     
+    
+    /**
+     * Restituisce una rappresentazione testuale dell'istruzione di assegnamento.
+     * 
+     * @return una stringa che rappresenta un operazione binaria nel formato "[left op right]"
+     */
     @Override
     public String toString()
     {
         return this.left.toString() + " " + this.op.toString() + " " + this.right.toString();
     }
 
+    /**
+     * Implementazione del metodo accept per consentire la visita da parte di oggetti IVisitor.
+     * 
+     * @param visitor l'oggetto IVisitor che visita il NodeBinOp
+     */
     @Override
     public void accept(IVisitor visitor) 
     {

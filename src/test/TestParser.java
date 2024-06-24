@@ -12,6 +12,12 @@ import scanner.Scanner;
 
 import exception‎.*;
 
+/**
+ * La classe TestParser implementa i test per il file relativi al Parser.
+ * 
+ * @author Guido Lorenzo Broglio mat 20043973
+ *
+ */
 class TestParser 
 {
 	@Test

@@ -4,7 +4,7 @@ import visitor.IVisitor;
 
 /**
  * La classe NodeDeref rappresenta un nodo per la dereferenziazione di un identificatore 
- * 	all'interno dell'albero sintattico astratto (AST).
+ * all'interno dell'albero sintattico astratto (AST).
  * 
  * Estende la classe NodeExpr e rappresenta un'operazione di dereferenziazione su un identificatore.
  * 
@@ -50,8 +50,7 @@ public class NodeDeref extends NodeExpr
     }
 
     /**
-     * Implementazione del metodo accept per consentire la visita del nodo
-     * 	da parte di un oggetto visitor.
+     * Implementazione del metodo accept per consentire la visita del nodo da parte di un oggetto visitor.
      * 
      * @param visitor l'oggetto visitor che visita il nodo
      */

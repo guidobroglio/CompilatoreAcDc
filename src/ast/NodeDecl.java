@@ -4,7 +4,7 @@ import visitor.IVisitor;
 
 /**
  * La classe NodeDecl rappresenta un nodo che contiene una dichiarazione di variabile nel
- * 	albero sintattico astratto (AST).
+ * albero sintattico astratto (AST).
  * 
  * @see visitor.IVisitor
  * 
@@ -60,12 +60,22 @@ public class NodeDecl extends NodeDecSt
         return this.init;
     }
     
+	/**
+	 * Restituisce una stringa che rappresenta la dichiarazione
+	 * 
+	 * @return una stringa che rappresenta la dichiarazione
+	 */
     @Override
     public String toString()
     {
         return "Decl: " + this.getId() + ", type: " + this.getType() + ", init: " + this.getInit();
     }
 
+	/**
+	 * Implementazione del metodo accept per consentire la visita da parte di oggetti IVisitor.
+	 * 
+	 * @param visitor l'oggetto IVisitor che visita il NodeDecl
+	 */
     @Override
     public void accept(IVisitor visitor) 
     {

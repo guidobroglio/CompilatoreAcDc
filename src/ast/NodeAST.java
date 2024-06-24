@@ -14,7 +14,7 @@ public abstract class NodeAST
     /**
      * Metodo astratto che consente a un oggetto IVisitor di visitare questo nodo AST.
      * 
-     * @param visitor l'oggetto IVisitor che visita questo nodo
+     * @param visitor l'oggetto IVisitor che visita questo nodo.
      */
     public abstract void accept(IVisitor visitor);
 }

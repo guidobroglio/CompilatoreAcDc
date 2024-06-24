@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class SymbolTable 
 {
-	/** Tabella dei simboli rappresentata come una mappa che associa nomi a attributi */
+	//Tabella dei simboli rappresentata come una mappa che associa nomi a attributi
 	private static HashMap<String, Attributes> table;
 	
 	/**

@@ -1,0 +1,5 @@
+int tempa;
+tempa = 5 ;
+float tempb = tempa / 3;
+tempb += 7;
+print tempb;

@@ -1,5 +1,11 @@
 package token;
 
+/**
+ * L'enum TokenType definisce i tipi di token supportati dal linguaggio.
+ * 
+ * @author Guido Lorenzo Broglio mat 20043973
+ *
+ */
 public enum TokenType 
 {
 	INT,

@@ -4,7 +4,7 @@ import visitor.IVisitor;
 
 /**
  * La classe NodeConvert rappresenta un nodo che contiene un'espressione e un operatore di conversione nel
- * 	albero sintattico astratto (AST).
+ * albero sintattico astratto (AST).
  * 
  * @see visitor.IVisitor
  * 
@@ -47,6 +47,11 @@ public class NodeConvert extends NodeExpr
         return op;
     }
 
+    /**
+     * Implementazione del metodo accept per consentire la visita da parte di oggetti IVisitor.
+     * 
+     * @param visitor l'oggetto IVisitor che visita il NodeConvert
+     */
     @Override
     public void accept(IVisitor visitor) 
     {

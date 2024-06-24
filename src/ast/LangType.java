@@ -2,7 +2,7 @@ package ast;
 
 /**
  * L'enumerazione LangType definisce i tipi di dato supportati dal linguaggio.
- * I tipi inclusi sono INT (intero) e FLOAT (virgola mobile).
+ * I tipi definiti sono INT (intero) e FLOAT (virgola mobile).
  * 
  * @see ast.NodeDecl
  * @see parser.Parser
@@ -24,6 +24,6 @@ package ast;
  */
 public enum LangType 
 {
-    INT, // Il tipo di dato intero.
-    FLOAT // Il tipo di dato virgola mobile.
+    INT,
+    FLOAT
 }

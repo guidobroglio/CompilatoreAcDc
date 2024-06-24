@@ -1,2 +1,0 @@
-float temp = 2.0/10;
-print temp;

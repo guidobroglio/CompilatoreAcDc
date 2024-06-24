@@ -12,22 +12,14 @@ import ast.*;
 import exception‎.*;
 import visitor.*;
 
+/**
+ * La classe TestCodeGeneratorVisitor implementa i test per il file relativi al CodeGeneratorVisitor.
+ * 
+ * @author Guido Lorenzo Broglio mat 20043973
+ *
+ */
 class TestCodeGeneratorVisitor 
-{
-	@Test
-	void testInt() throws FileNotFoundException, LexicalException, SyntacticException, IOException 
-	{
-		NodeProgram node = new Parser(new Scanner("src/test/data/testCodeGeneratorVisitor/TestInt.txt")).parse();
-		TypeCheckingVisitor visitor = new TypeCheckingVisitor();
-		node.accept(visitor);
-		CodeGeneratorVisitor codeGeneratorVisitor = new CodeGeneratorVisitor();
-		node.accept(codeGeneratorVisitor);
-		
-		assertEquals("9 sa 0 k 1 sc 0 k ", codeGeneratorVisitor.getCode());
-		assertEquals(null, codeGeneratorVisitor.getLog());
-		
-	}
-	
+{	
 	@Test
 	void testOperazioni() throws FileNotFoundException, LexicalException, SyntacticException, IOException 
 	{
@@ -54,16 +46,17 @@ class TestCodeGeneratorVisitor
 		assertEquals("Superato il numero di registri disponibili", codeGeneratorVisitor.getLog());
 	}
 	
+	
 	@Test
-	void testFlaot() throws FileNotFoundException, LexicalException, SyntacticException, IOException
+	void testGenerale() throws FileNotFoundException, LexicalException, SyntacticException, IOException
 	{
-		NodeProgram node = new Parser(new Scanner("src/test/data/testCodeGeneratorVisitor/testFloat.txt")).parse();
+		NodeProgram node = new Parser(new Scanner("src/test/data/testCodeGeneratorVisitor/Generale.txt")).parse();
 		TypeCheckingVisitor visitor = new TypeCheckingVisitor();
 		node.accept(visitor);
 		CodeGeneratorVisitor codeGeneratorVisitor = new CodeGeneratorVisitor();
 		node.accept(codeGeneratorVisitor);
-		assertEquals("10 5 k 2.0 / sa 0 k la p P ", codeGeneratorVisitor.getCode());
-		assertEquals(null, codeGeneratorVisitor.getLog());
+		assertEquals("5 sa 0 k 3 la / sb 0 k 7 sb 0 k lb p P ", codeGeneratorVisitor.getCode());
+		assertEquals(null, codeGeneratorVisitor.getLog());	
 	}
 	
 }

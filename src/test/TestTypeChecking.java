@@ -14,7 +14,12 @@ import parser.*;
 import ast.*;
 import visitor.*;
 
-
+/**
+ * La classe TestTypeChecking implementa i test per il file relativi al TypeChecking.
+ * 
+ * @author Guido Lorenzo Broglio mat 20043973
+ *
+ */
 class TestTypeChecking 
 {
 	@Test

@@ -14,13 +14,13 @@ import visitor.IVisitor;
  */
 public class NodeAssign extends NodeStm
 {
-    private NodeId id; // Il NodeId che identifica la variabile a cui viene assegnato un valore.
-    private NodeExpr expr; // L'espressione che rappresenta il valore assegnato alla variabile.
+    private NodeId id; 			// Il NodeId che identifica la variabile a cui viene assegnato un valore.
+    private NodeExpr expr; 		// L'espressione che rappresenta il valore assegnato alla variabile.
 
     /**
      * Costruisce un nuovo oggetto NodeAssign con l'NodeId e l'espressione specificati.
      * 
-     * @param id   l'NodeId che identifica la variabile a cui viene assegnato un valore
+     * @param id NodeId che identifica la variabile a cui viene assegnato un valore
      * @param expr l'espressione che rappresenta il valore assegnato alla variabile
      */
     public NodeAssign(NodeId id, NodeExpr expr)
@@ -30,9 +30,9 @@ public class NodeAssign extends NodeStm
     }
 
     /**
-     * Restituisce l'NodeId che identifica la variabile a cui viene assegnato un valore.
+     * Restituisce NodeId che identifica la variabile a cui viene assegnato un valore.
      * 
-     * @return l'NodeId che identifica la variabile
+     * @return NodeId che identifica la variabile
      */
     public NodeId getId()
     {

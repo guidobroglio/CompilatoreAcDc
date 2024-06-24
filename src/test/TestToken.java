@@ -7,6 +7,12 @@ import org.junit.jupiter.api.Test;
 import token.Token;
 import token.TokenType;
 
+/**
+ * La classe TestToken implementa i test per il file relativi al Token.
+ * 
+ * @author Guido Lorenzo Broglio mat 20043973
+ *
+ */
 class TestToken 
 {
 
@@ -27,5 +33,4 @@ class TestToken
         assertNull(token2.getVal());
         assertEquals("<FLOAT,r:5>", token2.toString());
     }
-
 }

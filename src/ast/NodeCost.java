@@ -4,7 +4,7 @@ import visitor.IVisitor;
 
 /**
  * La classe NodeCost rappresenta un nodo che contiene un valore costante e il suo tipo nel
- * 	albero sintattico astratto (AST).
+ * albero sintattico astratto (AST).
  * 
  * @see visitor.IVisitor
  * 
@@ -47,12 +47,22 @@ public class NodeCost extends NodeExpr
         return this.type;
     }
     
+	/**
+	 * Restituisce una stringa che rappresenta il valore costante.
+	 * 
+	 * @return una stringa che rappresenta il valore costante
+	 */
     @Override
     public String toString()
     {
         return this.value + " " + value;
     }
-
+    
+	/**
+	 * Implementazione del metodo accept per consentire la visita da parte di oggetti IVisitor.
+	 * 
+	 * @param visitor l'oggetto IVisitor che visita il NodeCost
+	 */
     @Override
     public void accept(IVisitor visitor) 
     {

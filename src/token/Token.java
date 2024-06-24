@@ -1,5 +1,11 @@
 package token;
 
+/**
+ * La classe Token rappresenta un token generato dal scanner
+ * 
+ * @author Guido Lorenzo Broglio mat 20043973
+ *
+ */
 public class Token 
 {
 
@@ -7,6 +13,7 @@ public class Token
 	private TokenType tipo;
 	private String val;
 	
+	// Costruttore
 	public Token(TokenType tipo, int riga, String val) 
 	{
 		this.tipo=tipo;
@@ -14,6 +21,7 @@ public class Token
 		this.val=val;
 	}
 	
+	// Costruttore
 	public Token(TokenType tipo, int riga) 
 	{
 		this(tipo, riga, null);
@@ -25,15 +33,21 @@ public class Token
 	    return String.format("<%s,r:%d%s>", getTipo(), getRiga(), (getVal() != null ? "," + getVal() : ""));
 	}
 
-	public int getRiga() {
+	// Getters per il campo riga 
+	public int getRiga() 
+	{
 		return riga;
 	}
 
-	public TokenType getTipo() {
+	// Getters per il campo tipo
+	public TokenType getTipo() 
+	{
 		return tipo;
 	}
 
-	public String getVal() {
+	// Getters per il campo val
+	public String getVal() 
+	{
 		return val;
 	}    
 }

@@ -2,7 +2,7 @@ package ast;
 
 /**
  * La classe NodeDecSt è una classe astratta che rappresenta un nodo di dichiarazione o statement
- * 	nell'albero sintattico astratto (AST).
+ * nell'albero sintattico astratto (AST).
  * 
  * Estende la classe astratta NodeAST e fornisce una base per la rappresentazione di nodi di dichiarazione
  * 	o statement specifici all'interno dell'albero sintattico.

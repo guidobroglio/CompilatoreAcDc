@@ -192,7 +192,6 @@ public class Parser
 			default:
 				throw new SyntacticException("Errore sintattico: token '" + tkn.getTipo() + "' non valido alla riga " + tkn.getRiga());
 		}
-
 	}
 	
 	/**
@@ -279,7 +278,6 @@ public class Parser
 			default: 
 				throw new SyntacticException("Errore sintattico: token '" + tkn.getTipo() + "' non valido alla riga " + tkn.getRiga());
 		}
-		
 	}
 	
 	/**

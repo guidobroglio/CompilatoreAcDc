@@ -2,7 +2,7 @@ package ast;
 
 /**
  * L'enumerazione LangOper definisce gli operatori aritmetici supportati dal linguaggio.
- * Gli operatori inclusi sono PLUS (+), MINUS (-), TIMES (*) e DIVIDE (/).
+ * Gli operatori definiti sono PLUS (+), MINUS (-), TIMES (*) e DIVIDE (/).
  * 
  * @see ast.NodeBinOp
  * @see parser.Parser
@@ -25,8 +25,8 @@ package ast;
  */
 public enum LangOper
 {
-    PLUS, // L'operatore di addizione.
-    MINUS, // L'operatore di sottrazione.
-    TIMES, // L'operatore di moltiplicazione.
-    DIVIDE // L'operatore di divisione.
+    PLUS, 
+    MINUS,
+    TIMES,
+    DIVIDE
 }
